@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us - Fresy</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">Fresy</div>
+    <div class="menu-toggle" id="menu-toggle">☰</div>
+
+    <nav id="navbar">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="terms.html">Terms & Condition</a>
+    </nav>
+</header>
+
+<section class="contact-banner">
+    <h1>Contact Us</h1>
+    <p>We’d love to hear from you 💬</p>
+</section>
+
+<section class="contact-container">
+
+    <div class="contact-info">
+        <h2>Get in Touch</h2>
+        <p><strong>📍 Address:</strong> Purba Bardhaman</p>
+        <p><strong>📞 Phone:</strong> +91 6294737698</p>
+        <p><strong>📧 Email:</strong> support@fresy.in</p>
+    </div>
+
+    <div class="contact-form">
+        <h2>Send Message (Suggest a features)</h2>
+
+        <form id="contactForm">
+
+            <input type="text" name="name" placeholder="Your Name" required>
+
+            <input type="email" name="email" placeholder="Your Email" required>
+
+            <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+
+            <button type="submit">Send Message</button>
+
+        </form>
+
+    </div>
+
+</section>
+
+<footer>
+    <p>© 2026 Fresy. All Rights Reserved.</p>
+</footer>
+
+<script>
+/* ================= SMS SEND SYSTEM ================= */
+
+document.getElementById("contactForm").addEventListener("submit", function(e) {
+
+    e.preventDefault();
+
+    const name = this.name.value;
+    const email = this.email.value;
+    const message = this.message.value;
+
+    const phoneNumber = "6294737698";  // তোমার নম্বর
+
+    const smsMessage =
+        "Hello Fresy,\n\n" +
+        "Name: " + name + "\n" +
+        "Email: " + email + "\n" +
+        "Message: " + message;
+
+    const smsURL = "sms:" + phoneNumber + "?body=" + encodeURIComponent(smsMessage);
+
+    window.location.href = smsURL;
+
+});
+
+/* ================= MOBILE MENU ================= */
+
+const menuToggle = document.getElementById("menu-toggle");
+const navbar = document.getElementById("navbar");
+
+menuToggle.addEventListener("click", () => {
+    navbar.classList.toggle("active");
+});
+</script>
+
+</body>
+</html>

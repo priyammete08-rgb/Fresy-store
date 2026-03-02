@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grocery - Fresy</title>
+
+<style>
+body{
+    margin:0;
+    font-family: Arial, sans-serif;
+    background:#f4f6f8;
+}
+
+.sidebar{
+    background:#27ae60;
+    color:white;
+    padding:15px;
+    text-align:center;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.category-bar{
+    display:flex;
+    overflow-x:auto;
+    gap:10px;
+    padding:10px;
+    background:white;
+}
+
+.category-bar button{
+    padding:8px 14px;
+    border:none;
+    background:#eafaf1;
+    color:#27ae60;
+    border-radius:20px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.category-bar button.active,
+.category-bar button:hover{
+    background:#27ae60;
+    color:white;
+}
+
+.search-box{
+    padding:15px;
+    text-align:center;
+    background:white;
+}
+
+.search-box input{
+    width:90%;
+    max-width:400px;
+    padding:10px;
+    border:1px solid #27ae60;
+    border-radius:8px;
+}
+/* Products */
+.products{
+    flex:1;
+    padding:20px;
+    display:grid;
+    grid-template-columns: repeat(3,1fr);
+    gap:15px;
+}
+
+.card{
+    background:white;
+    padding:15px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.card img{
+    width:100%;
+    height:120px;
+    object-fit:cover;
+    border-radius:8px;
+}
+
+.card h4{
+    margin:10px 0 5px;
+    color:#2c3e50;
+}
+
+.card p{
+    color:#27ae60;
+    font-weight:bold;
+}
+
+.qty-control{
+    margin:10px 0;
+}
+
+.qty-control input{
+    width:60px;
+    padding:6px;
+    border:1px solid #27ae60;
+    border-radius:6px;
+    text-align:center;
+}
+
+.card button{
+    padding:10px 14px;
+    background:#27ae60;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.card button:hover{
+    background:#219150;
+    transform:scale(1.05);
+}
+
+/* Responsive */
+@media(max-width:768px){
+
+    
+    .products{
+        grid-template-columns: repeat(2,1fr);
+    }
+    .rating{
+    font-size:14px;
+    color:#ffa500;
+    margin:5px 0;
+   }
+   .old-price{
+    text-decoration:line-through;
+    color:gray;
+    margin-right:5px;
+}
+
+}
+
+</style>
+</head>
+<body>
+    <div class="sidebar">
+        <h3>Grocery Section</h3> 
+    </div>
+
+    <!-- Sidebar -->
+    <div class="category-bar">
+        <button onclick="filterCategory('all')">All</button>
+        <button onclick="filterCategory('biscuit')">Biscuit</button>
+        <button onclick="filterCategory('masala')">Masala</button>
+        <button onclick="filterCategory('snacks')">Snacks</button>
+    </div>
+   <div class="search-box">
+    <input type="text" id="searchBox" placeholder="Search grocery..." onkeyup="searchProduct()">
+</div>
+
+    <!-- Products -->
+    <div class="products">
+
+        <!-- Biscuit -->
+       
+        <div class="card" data-category="biscuit">
+            <img src="images/biscuit.jpg">
+            <h4>Biscuit</h4>
+            <p>₹10 / pack</p>
+            <div class="qty-control">
+                <input type="number" id="qty-Biscuit" value="1" min="1">
+            </div>
+            <button onclick="addToCart('Biscuit',10)">
+                Add to Cart
+            </button>
+        </div>
+ <div class="card" data-category="biscuit">
+            <img src="Parle.jpg">
+            <h4>Parle-G</h4>
+            <p>
+    <span class="old-price">₹6</span>
+    ₹4 / pack
+</p>
+            
+            <div class="qty-control">
+                <input type="number" id="qty-Biscuit" value="1" min="1">
+        <div class="rating">
+    ⭐⭐⭐⭐☆
+</div>
+            </div>
+            <button onclick="addToCart('Biscuit',4,'Parle-G')">
+    Add to Cart
+</button>
+        </div>
+         
+        <!-- Haldi -->
+        <div class="card" data-category="masala">
+            <img src="haldi.jpg">
+            <h4>Haldi Packet</h4>
+            <p>₹40 / pack</p>
+            <div class="qty-control">
+                <input type="number" id="qty-Haldi" value="1" min="1">
+            </div>
+            <button onclick="addToCart('Haldi',40)">
+                Add to Cart
+            </button>
+        </div>
+
+        <!-- Chips -->
+        <div class="card" data-category="snacks">
+            <img src="chips.jpg">
+            <h4>Chips</h4>
+            <p>₹20 / pack</p>
+            <div class="qty-control">
+                <input type="number" id="qty-Chips" value="1" min="1">
+            </div>
+            <button onclick="addToCart('Chips',20)">
+                Add to Cart
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* CATEGORY FILTER */
+function filterCategory(category){
+    const products = document.querySelectorAll(".card");
+
+    products.forEach(card=>{
+        if(category==="all" || card.dataset.category===category){
+            card.style.display="";
+        }else{
+            card.style.display="none";
+        }
+    });
+}
+
+function addToCart(name, price, company){
+
+    let qtyInput = document.getElementById("qty-" + name);
+    let quantity = parseInt(qtyInput.value);
+
+    if(isNaN(quantity) || quantity<=0){
+        alert("Enter valid quantity");
+        return;
+    }
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    let existing = cart.find(item=>item.name===name && item.company===company);
+
+    if(existing){
+        existing.qty += quantity;
+    }else{
+        cart.push({
+            name:name,
+            price:Number(price),
+            qty:Number(quantity),
+            company:company
+        });
+    }
+
+    localStorage.setItem("cart",JSON.stringify(cart));
+
+    alert(name + " Added ✅");
+
+    qtyInput.value=1;
+}
+</script>
+<script>
+    function searchProduct(){
+
+    let input = document.getElementById("searchBox").value.toLowerCase();
+    let cards = document.querySelectorAll(".card");
+
+    cards.forEach(card=>{
+        let title = card.querySelector("h4").innerText.toLowerCase();
+
+        if(title.includes(input)){
+            card.style.display="";
+        }else{
+            card.style.display="none";
+        }
+    });
+
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms & Conditions - Fresy</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">Fresy</div>
+
+    <div class="menu-toggle" id="menu-toggle">☰</div>
+
+    <nav id="navbar">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="terms.html">Terms & conditions </a>
+    </nav>
+</header>
+
+<section class="terms-banner">
+    <h1>Terms & Conditions</h1>
+    <p>Please read carefully before placing an order.</p>
+</section>
+
+<section class="terms-content">
+
+    <h2>1. Order Policy</h2>
+    <p>
+        Customers must provide correct name, address, and contact details 
+        while placing an order. Orders with incorrect information may be cancelled.
+    </p>
+
+    <h2>2. Fake Orders</h2>
+    <p class="warning">
+        Any fake, prank, or intentionally wrong order will result in immediate action.  
+        Fresy reserves the right to block the customer account and refuse future service.
+    </p>
+
+    <h2>3. Delivery Policy</h2>
+    <p>
+        Delivery time may vary depending on location and availability of products.
+        Customers must be available at the delivery address at the time of delivery.
+    </p>
+
+    <h2>4. Payment Policy</h2>
+    <p>
+        Payments must be completed as per selected method (Cash on Delivery or Online Payment).
+        Non-payment may lead to service restriction.
+    </p>
+
+    <h2>5. Changes & Updates</h2>
+    <p>
+        Fresy reserves the right to modify these terms at any time without prior notice.
+    </p>
+
+</section>
+
+<footer>
+    <p>© 2026 Fresy. All Rights Reserved.</p>
+</footer>
+
+<script>
+const menuToggle = document.getElementById("menu-toggle");
+const navbar = document.getElementById("navbar");
+
+menuToggle.addEventListener("click", () => {
+    navbar.classList.toggle("active");
+});
+</script>
+
+</body>
+</html>

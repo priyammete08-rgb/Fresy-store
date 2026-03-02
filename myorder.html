@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Order - Fresy</title>
+<style>
+body{
+  font-family:Arial;
+  background:#f4f6f8;
+  text-align:center;
+  padding:50px;
+}
+
+.box{
+  background:white;
+  padding:30px;
+  border-radius:12px;
+  display:inline-block;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+h2{
+  color:#27ae60;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+  <h2>📦 Your Last Order</h2>
+  <p id="orderId"></p>
+  <p id="otp"></p>
+</div>
+
+<script>
+let orderId = localStorage.getItem("lastOrderId");
+let otp = localStorage.getItem("lastOrderOTP");
+
+if(orderId && otp){
+  document.getElementById("orderId").innerHTML = "Order ID: " + orderId;
+  document.getElementById("otp").innerHTML = "Delivery OTP: " + otp;
+}else{
+  document.querySelector(".box").innerHTML = "No recent order found.";
+}
+</script>
+
+</body>
+</html>

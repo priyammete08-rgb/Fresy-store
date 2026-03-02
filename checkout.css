@@ -1,0 +1,262 @@
+body {
+    font-family: Arial;
+    margin: 0;
+    background: #f4f4f4;
+}
+
+.checkout-container {
+    max-width: 500px;
+    margin: 30px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #27ae60;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#order-summary {
+    background: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+/* ===== Payment Section ===== */
+
+.payment-section {
+    background: #ffffff;
+    padding: 18px;
+    margin-top: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.payment-section h3 {
+    margin-bottom: 12px;
+    color: #27ae60;
+}
+
+/* Radio Container */
+.payment-option {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+/* Hover Effect */
+.payment-option:hover {
+    border-color: #27ae60;
+    background: #f0faf4;
+}
+
+/* Radio Button */
+.payment-option input[type="radio"] {
+    margin-right: 10px;
+    accent-color: #27ae60;
+    transform: scale(1.2);
+}
+.coupon-box {
+    background:#fff;
+    padding:15px;
+    margin-top:20px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+
+.coupon-box input {
+    padding:8px;
+    width:60%;
+    border:1px solid #27ae60;
+    border-radius:6px;
+}
+
+.coupon-box button {
+    padding:8px 12px;
+    background:#27ae60;
+    color:white;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+#couponMessage {
+    margin-top:8px;
+    font-weight:bold;
+}
+/* ================= UPI PAYMENT SECTION ================= */
+
+#upiSection{
+    background: #ffffff;
+    border: 2px solid #27ae60;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: 0.3s ease;
+}
+
+#upiSection h3{
+    color: #27ae60;
+    margin-bottom: 10px;
+}
+
+#upiSection p{
+    font-size: 14px;
+}
+
+#upiSection img{
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+
+/* Payment Buttons */
+
+#upiSection button{
+    padding: 10px 15px;
+    margin: 5px 5px 0 0;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+    color: white;
+}
+
+/* PhonePe */
+#phonepeBtn{
+    background: #5f259f;
+}
+
+#phonepeBtn:hover{
+    background: #4a1d7a;
+}
+
+/* Google Pay */
+#gpayBtn{
+    background: #4285f4;
+}
+
+#gpayBtn:hover{
+    background: #3367d6;
+}
+
+/* Paytm */
+#paytmBtn{
+    background: #00baf2;
+}
+
+#paytmBtn:hover{
+    background: #009cd8;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+    #upiSection{
+        padding: 15px;
+    }
+
+    #upiSection button{
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    #upiSection img{
+        width: 100%;
+        max-width: 250px;
+    }
+
+/* ===== DELIVERY TYPE BOX ===== */
+
+.delivery-box {
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    margin-bottom: 15px;
+}
+
+/* Title */
+.delivery-box h3 {
+    margin-bottom: 12px;
+    color: #27ae60;
+    font-size: 18px;
+}
+
+/* Options */
+.delivery-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    border: 2px solid #eaeaea;
+    transition: 0.3s ease;
+}
+
+/* Hover Effect */
+.delivery-option:hover {
+    border-color: #27ae60;
+    background: #f3fff7;
+}
+
+/* Radio */
+.delivery-option input[type="radio"] {
+    accent-color: #27ae60;
+    transform: scale(1.2);
+    margin-right: 10px;
+}
+
+/* Text */
+.delivery-text {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* Free Tag */
+.free-tag {
+    background: #27ae60;
+    color: white;
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 20px;
+}
+
+/* Responsive */
+@media(max-width:768px){
+    .delivery-option {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+}

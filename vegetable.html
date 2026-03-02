@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vegetables - Fresy</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#f4f6f8;
+}
+
+/* Header */
+.header{
+    background:#27ae60;
+    color:white;
+    padding:15px;
+    text-align:center;
+    font-size:20px;
+    font-weight:bold;
+}
+
+/* Category Bar */
+.category-bar{
+    display:flex;
+    overflow-x:auto;
+    gap:10px;
+    padding:10px;
+    background:white;
+}
+
+.category-bar button{
+    padding:8px 14px;
+    border:none;
+    background:#eafaf1;
+    color:#27ae60;
+    border-radius:20px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.category-bar button.active,
+.category-bar button:hover{
+    background:#27ae60;
+    color:white;
+}
+
+/* Search */
+.search-box{
+    padding:15px;
+    text-align:center;
+    background:white;
+}
+
+.search-box input{
+    width:90%;
+    max-width:400px;
+    padding:10px;
+    border:1px solid #27ae60;
+    border-radius:8px;
+}
+
+/* Products */
+.products{
+    display:grid;
+    grid-template-columns: repeat(2,1fr);
+    gap:15px;
+    padding:20px;
+}
+
+.card{
+    background:white;
+    padding:15px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.card img{
+    width:100%;
+    height:120px;
+    object-fit:cover;
+    border-radius:8px;
+}
+
+.card h4{
+    margin:10px 0 5px;
+}
+
+.card p{
+    color:#27ae60;
+    font-weight:bold;
+}
+
+/* Quantity */
+.qty-control{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    margin:10px 0;
+}
+
+.qty-control button{
+    width:30px;
+    height:30px;
+    background:#27ae60;
+    border:none;
+    color:white;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.qty-control input{
+    width:50px;
+    text-align:center;
+    border:1px solid #27ae60;
+    border-radius:6px;
+}
+
+/* Button */
+.card button.add-btn{
+    padding:8px 14px;
+    background:#27ae60;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.card button.add-btn:hover{
+    background:#219150;
+}
+/*oldprice*/
+.old-price{
+    text-decoration: line-through;
+    color: gray;
+    margin-right: 6px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+🥕 Vegetable Section
+</div>
+
+<!-- CATEGORY -->
+<div class="category-bar">
+    <button class="active" onclick="filterCategory('all',this)">All</button>
+    <button onclick="filterCategory('leafy',this)">Leafy</button>
+    <button onclick="filterCategory('root',this)">Root</button>
+    <button onclick="filterCategory('other',this)">Other</button>
+</div>
+
+<!-- SEARCH -->
+<div class="search-box">
+    <input type="text" id="searchBox" placeholder="Search vegetables..." onkeyup="searchProduct()">
+</div>
+
+<div class="products">
+
+    <div class="card" data-category="root">
+        <img src="images/potato.jpg">
+        <h4>Potato</h4>
+        <p>₹20 / kg</p>
+        <div class="qty-control">
+        <button onclick="changeQty(101,-1)">−</button>
+        <input type="number" id="qty-101" value="1" min="1">
+        <button onclick="changeQty(101,1)">+</button>
+    </div>
+        <button class="add-btn" onclick="addToCart('Potato',20,101)">
+            Add to Cart
+        </button>
+    </div>
+
+    <div class="card" data-category="other">
+        <img src="images/tomato.jpg">
+        <h4>Tomato</h4>
+        <p>₹30 / kg</p>
+       <div class="qty-control">
+        <button onclick="changeQty(101,-1)">−</button>
+        <input type="number" id="qty-101" value="1" min="1">
+        <button onclick="changeQty(101,1)">+</button>
+    </div>
+        <button class="add-btn" onclick="addToCart('Tomato',30,101)">
+            Add to Cart
+        </button>
+    </div>
+
+</div>
+
+<script>
+
+/* CATEGORY FILTER */
+function filterCategory(category,btn){
+
+    document.querySelectorAll(".category-bar button")
+        .forEach(b=>b.classList.remove("active"));
+
+    btn.classList.add("active");
+
+    document.querySelectorAll(".card").forEach(card=>{
+        if(category==="all" || card.dataset.category===category){
+            card.style.display="";
+        }else{
+            card.style.display="none";
+        }
+    });
+}
+
+/* SEARCH */
+function searchProduct(){
+    let input = document.getElementById("searchBox").value.toLowerCase();
+    let cards = document.querySelectorAll(".card");
+
+    cards.forEach(card=>{
+        let title = card.querySelector("h4").innerText.toLowerCase();
+        card.style.display = title.includes(input) ? "" : "none";
+    });
+}
+
+/* Quantity */
+function changeQty(name, change){
+    let input = document.getElementById("qty-" + name);
+    let value = parseInt(input.value) || 1;
+    value += change;
+    if(value < 1) value = 1;
+    input.value = value;
+}
+
+/* Add to Cart */
+function addToCart(name, price){
+
+    let qty = parseInt(document.getElementById("qty-" + name).value) || 1;
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    let item = cart.find(i => i.name === name);
+
+    item ? item.qty += qty : cart.push({name, price, qty});
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    alert(name + " Added ✅");
+
+    document.getElementById("qty-" + name).value = 1;
+}
+
+</script>
+<div class="products"></div>
+<<script src="vegetable.js"></script>
+
+</body>
+</html>

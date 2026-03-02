@@ -1,0 +1,38 @@
+[
+  {
+    "id":1,
+    "name": "chili",
+    "price": 20,
+    "oldPrice":40,
+    "unit":"kg",
+    "category": "fruit",
+    "image": "images/potato.jpg"
+  },
+  { 
+    "id":2,
+    "name": "guava",
+    "price": 120,
+    "oldPrice":140,
+    "unit":"kg",
+    "category": "vegetable",
+    "image": "images/apple.jpg"
+  },
+  {
+    "id":3,
+    "name": "pineapple",
+    "price": 10,
+    "oldPrice":15,
+    "unit":"pc",
+    "category": "fruit",
+    "image": "images/biscuit.jpg"
+  } ,
+  {
+    "id":4,
+    "name": "lemon",
+    "price": 10,
+    "oldPrice":15,
+    "unit":"pc",
+    "category": "fruit",
+    "image": "images/biscut.jpg"
+  }
+]

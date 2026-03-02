@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Success - Fresy</title>
+
+<style>
+body{
+    margin:0;
+    font-family: Arial, sans-serif;
+    background:#f4f6f8;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.success-box{
+    background:white;
+    padding:40px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+    max-width:400px;
+    width:90%;
+}
+
+.success-icon{
+    font-size:60px;
+    color:#27ae60;
+}
+
+h2{
+    color:#27ae60;
+    margin-top:10px;
+}
+
+.order-info{
+    margin-top:15px;
+    font-size:15px;
+    color:#555;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:25px;
+    padding:12px 20px;
+    background:#27ae60;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.btn:hover{
+    background:#219150;
+}
+</style>
+</head>
+
+<body>
+
+<div class="success-box">
+
+    <div class="success-icon">✔</div>
+
+    <h2>Order Placed Successfully!</h2>
+
+    <div class="order-info">
+        <p><strong>Order ID:</strong></p>
+        <p id="orderId"></p>
+
+        <p><strong>Date:</strong> <span id="orderDate"></span></p>
+        <p><strong>Time:</strong> <span id="orderTime"></span></p>
+        <p>Delivery Code: <span class="order-otp"></span></p>
+        <p><strong>Estimated Delivery:</strong> 
+<span id="deliveryTime"></span></p>
+    </div>
+<button onclick="downloadInvoice()" class="btn">
+Download Invoice
+</button>
+    <a href="index.html" class="btn">Back to Home</a>
+
+</div>
+
+<script>
+window.onload = function(){
+
+    const params = new URLSearchParams(window.location.search);
+
+    const orderId = params.get("orderId");
+    const date = params.get("date");
+    const time = params.get("time");
+
+    // ✅ ID দিয়ে ধরবো
+    const orderIdEl = document.getElementById("orderId");
+    const dateEl = document.getElementById("orderDate");
+    const timeEl = document.getElementById("orderTime");
+    const otpEl = document.querySelector(".order-otp");
+
+    if(orderIdEl) orderIdEl.innerText = orderId || "-";
+    if(dateEl) dateEl.innerText = date || "-";
+    if(timeEl) timeEl.innerText = time || "-";
+
+    const otp = localStorage.getItem("lastOrderOTP");
+    if(otpEl) otpEl.innerText = otp || "-";
+
+};
+</script>
+<script>
+/* ===== ESTIMATED DELIVERY TIME ===== */
+
+let now = new Date();
+now.setMinutes(now.getMinutes() + 45);
+
+let estHours = String(now.getHours()).padStart(2, '0');
+let estMinutes = String(now.getMinutes()).padStart(2, '0');
+
+document.getElementById("deliveryTime").innerText =
+estHours + ":" + estMinutes;
+</script>
+
+<script>
+function downloadInvoice(){
+
+    const params = new URLSearchParams(window.location.search);
+
+    const orderId = params.get("orderId");
+    const orderDate = params.get("date");
+    const orderTime = params.get("time");
+
+    let content = `
+FRESY GROCERY STORE
+-------------------------
+Order ID: ${orderId}
+Date: ${orderDate}
+Time: ${orderTime}
+
+Estimated Delivery: ${document.getElementById("deliveryTime").innerText}
+
+Thank you for shopping with Fresy!
+`;
+
+    let blob = new Blob([content], { type: "text/plain" });
+
+    let link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "Fresy_Invoice.txt";
+    link.click();
+}
+</script>
+</body>
+</html>

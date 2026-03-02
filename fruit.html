@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fruits - Fresy</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#f4f6f8;
+}
+
+/* Header */
+.header{
+    background:#27ae60;
+    color:white;
+    padding:18px;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+}
+
+/* Category Bar */
+.category-bar{
+    display:flex;
+    gap:12px;
+    padding:15px;
+    overflow-x:auto;
+    background:white;
+}
+
+.category-bar button{
+    padding:10px 20px;
+    border:none;
+    background:#eafaf1;
+    color:#27ae60;
+    border-radius:30px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.category-bar button.active,
+.category-bar button:hover{
+    background:#27ae60;
+    color:white;
+}
+
+/* Search */
+.search-box{
+    padding:15px;
+    background:white;
+}
+
+.search-box input{
+    width:100%;
+    padding:14px;
+    border:2px solid #27ae60;
+    border-radius:20px;
+    font-size:16px;
+    outline:none;
+}
+
+.search-box input:focus{
+    box-shadow:0 0 8px rgba(39,174,96,0.4);
+}
+
+/* Products */
+.products{
+    display:grid;
+    grid-template-columns: repeat(2,1fr);
+    gap:15px;
+    padding:20px;
+}
+
+.card{
+    background:white;
+    padding:15px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.card img{
+    width:100%;
+    height:120px;
+    object-fit:cover;
+    border-radius:8px;
+}
+
+.card h4{
+    margin:10px 0 5px;
+}
+
+.card p{
+    color:#27ae60;
+    font-weight:bold;
+}
+
+/* Quantity */
+.qty-control{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    margin:10px 0;
+}
+
+.qty-control button{
+    width:30px;
+    height:30px;
+    background:#27ae60;
+    border:none;
+    color:white;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.qty-control input{
+    width:50px;
+    text-align:center;
+    border:1px solid #27ae60;
+    border-radius:6px;
+}
+
+/* Add Button */
+.add-btn{
+    padding:8px 14px;
+    background:#27ae60;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.add-btn:hover{
+    background:#219150;
+}
+.old-price{
+  text-decoration: line-through;
+  color: gray;
+  margin-right: 6px;
+  font-size: 14px;
+}
+
+.discount{
+  background: #27ae60;
+  color: white;
+  padding: 3px 6px;
+  font-size: 12px;
+  border-radius: 6px;
+  margin-left: 6px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+🍎 Fruit Section
+</div>
+
+<div class="category-bar">
+    <button class="active" onclick="filterCategory('all',this)">All</button>
+    <button onclick="filterCategory('seasonal',this)">Seasonal</button>
+    <button onclick="filterCategory('imported',this)">Imported</button>
+    <button onclick="filterCategory('local',this)">Local</button>
+</div>
+
+<div class="search-box">
+    <input type="text" id="searchBox" placeholder="Search fruits..." onkeyup="searchProduct()">
+</div>
+
+<div class="products">
+
+    <div class="card" data-category="local">
+        <img src="images/apple.jpg">
+        <h4>Apple</h4>
+        <p>₹120 / kg</p>
+        <div class="qty-control">
+        <button onclick="changeQty(101,-1)">−</button>
+        <input type="number" id="qty-101" value="1" min="1">
+        <button onclick="changeQty(101,1)">+</button>
+    </div>
+        <button class="add-btn" onclick="addToCart('Apple',120,101)">
+            Add to Cart
+        </button>
+    </div>
+
+    <div class="card" data-category="seasonal">
+        <img src="images/mango.jpg">
+        <h4>Mango</h4>
+        <p>₹80 / kg</p>
+     <div class="qty-control">
+        <button onclick="changeQty(101,-1)">−</button>
+        <input type="number" id="qty-101" value="1" min="1">
+        <button onclick="changeQty(101,1)">+</button>
+    </div>
+        <button class="add-btn" onclick="addToCart('Mango',80,101)">
+            Add to Cart
+        </button>
+    </div>
+
+</div>
+
+<script>
+
+function filterCategory(category,btn){
+    document.querySelectorAll(".category-bar button")
+        .forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+
+    document.querySelectorAll(".card").forEach(card=>{
+        card.style.display = 
+        (category==="all" || card.dataset.category===category) ? "" : "none";
+    });
+}
+
+function searchProduct(){
+    let input = document.getElementById("searchBox").value.toLowerCase();
+    document.querySelectorAll(".card").forEach(card=>{
+        let title = card.querySelector("h4").innerText.toLowerCase();
+        card.style.display = title.includes(input) ? "" : "none";
+    });
+}
+
+function changeQty(name, change){
+    let input = document.getElementById("qty-" + name);
+    let value = parseInt(input.value) || 1;
+    value = Math.max(1, value + change);
+    input.value = value;
+}
+
+function addToCart(name, price){
+    let qty = parseInt(document.getElementById("qty-" + name).value) || 1;
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let item = cart.find(i => i.name === name);
+    item ? item.qty += qty : cart.push({name, price, qty});
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert(name + " Added ✅");
+    document.getElementById("qty-" + name).value = 1;
+}
+
+</script>
+<div class="products"></div>
+
+<script>
+
+fetch("products.json")
+.then(res => res.json())
+.then(data => {
+
+  let container = document.querySelector(".products");
+
+  data.forEach(product => {
+
+    container.innerHTML += `
+      <div class="card">
+
+        <img src="${product.image}">
+        <h4>${product.name}</h4>
+
+        <p>
+          ${product.oldPrice ? 
+            `<span class="old-price">₹${product.oldPrice}</span>` 
+            : ""}
+
+          ₹${product.price} / ${product.unit}
+
+          ${product.oldPrice ? 
+            `<span class="discount">
+              ${Math.round((product.oldPrice - product.price) / product.oldPrice * 100)}% OFF
+            </span>` 
+            : ""}
+        </p>
+
+        <div class="qty-control">
+          <button onclick="changeQty(${product.id},-1)">−</button>
+          <input type="number" id="qty-${product.id}" value="1">
+          <button onclick="changeQty(${product.id},1)">+</button>
+        </div>
+
+        <button class="add-btn"
+          onclick="addToCart('${product.name}',${product.price},${product.id})">
+          Add to Cart
+        </button>
+
+      </div>
+    `;
+
+  });
+
+});
+
+
+function changeQty(id, change){
+  let input = document.getElementById("qty-" + id);
+  let value = parseInt(input.value) || 1;
+  value += change;
+  if(value < 1) value = 1;
+  input.value = value;
+}
+
+
+function addToCart(name, price, id){
+
+  let qty = parseInt(document.getElementById("qty-" + id).value) || 1;
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  let item = cart.find(i => i.name === name);
+
+  if(item){
+    item.qty += qty;
+  } else {
+    cart.push({name, price, qty});
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  alert(name + " Added ✅");
+
+  document.getElementById("qty-" + id).value = 1;
+}
+
+</script>
+</body>
+</html>

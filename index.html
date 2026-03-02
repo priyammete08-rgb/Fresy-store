@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fresy - Grocery Delivery</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">Fresy</div>
+
+    <div class="menu-toggle" id="menu-toggle">
+        ☰
+    </div>
+
+    <nav id="navbar">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="terms.html">Terms & conditions</a>
+        <a href="cart.html" class="cart-icon">
+    🛒 Cart
+</a>
+<a href="delivery.html">Delivery</a>
+<a href="myorder.html">My Orders</a>
+    </nav>
+</header>
+
+<!-- Search -->
+<section class="search-section">
+    <input type="text"  id="searchInput"placeholder="Search groceries...">
+</section>
+<div class="area-select-box">
+    <label for="areaSelect">📍 Select Your Area</label>
+
+    <select id="areaSelect">
+        <option value="">-- Choose Area --</option>
+        <option value="jhilu">Jhilu</option>
+        <option value="nutanhat">Nutanhat</option>
+    </select>
+</div>
+
+<!-- Banner -->
+<section class="banner">
+    <h1>Village Freshness Delivered</h1>
+    <p>Fresh groceries at your doorstep 🌿</p>
+</section>
+<!-- Fixed Category Circles -->
+<section class="category-wrapper">
+    <div class="category-track">
+
+       <a href="vegetable.html" id="vegCircle">
+    <button>
+        <img src="images/vegetable.jpg" alt="">
+        <span>Vegetable</span>
+    </button>
+</a>
+       <a href="fruit.html" id="fruitCircle">
+        <button>
+            <img src="images/fruit.jpg" alt="">
+            <span>Fruit</span>
+        </button>
+       </a>
+       <a href="grocery.html">
+    <button>
+        <img src="images/grocery.jpg">
+        <span>Grocery</span>
+    </button>
+</a>
+
+    </div>
+</section>
+<!-- Products -->
+<section class="products">
+
+    <div class="card">
+        <img src="images/sugar.jpg" alt="Sugar">
+        <h3>Sugar</h3>
+        <p>₹50 / kg</p>
+  <div class="qty-control">
+    <input type="number"  id ="qty-Sugar"min="1" value="1">
+    <select id ="unit-Sugar">
+        <option>kg</option>
+        <option>g</option>
+    </select>
+</div>
+      <button onclick="addToCartUniversal('Sugar', 50, 'mass')">
+        Add to Cart
+    </button>
+    </div>
+
+   <div class="card">
+    <img src="images/atta.jpg" alt="Atta">
+    <h3>Atta</h3>
+    <p>₹60 / kg</p>
+
+    <div class="qty-control">
+        <input type="number" id="qty-1" value="1" min="1">
+    </div>
+
+    <button onclick="addToCart('Atta', 60, 1)">
+        Add to Cart
+    </button>
+</div>
+    <div class="card">
+        <img src="images/rice.jpg" alt="Rice">
+        <h3>Rice</h3>
+        <p>₹40 / kg</p>
+          <div class="qty-control">
+        <input type="number" id="qty-1" value="1" min="1">
+    </div>
+        <button onclick="addToCart('Rice', 40,1)">Add to Cart</button>
+    </div>
+
+    <div class="card">
+        <img src="images/oil.jpg" alt="Oil">
+        <h3>Oil</h3>
+        <p>₹120 / L</p>
+        <div class="qty-control">
+        <input type="number" id="qty-1" value="1" min="1">
+    </div>
+        <button onclick="addToCart('oil', 120,1)">Add to Cart</button>
+    </div>
+
+</section>
+<p id="noResult" style="display:none; text-align:center; margin-top:20px;">
+    No product found 😔
+</p>
+<div class="products"></div>
+<footer>
+    <p>© 2026 Fresy. All Rights Reserved.</p>
+</footer>
+
+<script>
+const menuToggle = document.getElementById("menu-toggle");
+const navbar = document.getElementById("navbar");
+
+menuToggle.addEventListener("click", () => {
+    navbar.classList.toggle("active");
+});
+
+
+// Load cart from localStorage
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+/* ADD TO CART */
+function addToCart(name, price) {
+
+    let existing = cart.find(item => item.name === name);
+
+    if (existing) {
+        existing.qty += 1;
+    } else {
+        cart.push({
+            name: name,
+            price: price,
+            qty: 1
+        });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    alert("Product Added to Cart ✅");
+}
+
+/* LOAD CART PAGE */
+function loadCart() {
+
+    const container = document.getElementById("cart-items");
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    let total = 0;
+
+    cart.forEach((item, index) => {
+
+        total += item.price * item.qty;
+
+        container.innerHTML += `
+            <div>
+                <h3>${item.name}</h3>
+                <p>₹${item.price} × ${item.qty}</p>
+                <button onclick="removeItem(${index})">Remove</button>
+                <hr>
+            </div>
+        `;
+    });
+
+    document.getElementById("total").innerText = total;
+}
+
+/* REMOVE ITEM */
+function removeItem(index) {
+    cart.splice(index, 1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    loadCart();
+}
+
+/* Auto run when cart page loads */
+loadCart();
+</script>
+<script src="product.js"></script>
+<script src="index.js"></script>
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    const areaSelect = document.getElementById("areaSelect");
+
+    const params = new URLSearchParams(window.location.search);
+    const area = params.get("area");
+
+    // 🔹 If URL has area → set selected option
+    if(area && areaSelect){
+        areaSelect.value = area;
+    }
+
+    // 🔹 Auto redirect when change
+    if(areaSelect){
+        areaSelect.addEventListener("change", function(){
+            let selectedArea = this.value;
+            if(selectedArea){
+                window.location.href = "index.html?area=" + selectedArea;
+            }
+        });
+    }
+
+    // 🔹 Hide vegetable for Jhilu
+    const vegCircle = document.getElementById("vegCircle");
+  const fruitCircle = document.getElementById("fruitCircle");
+    if(area === "jhilu"){
+     if(vegCircle)vegCircle.style.display = "none";
+      if(fruitCircle) fruitCircle.style.display = "none";
+    }
+
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout - Fresy</title>
+<link rel="stylesheet" href="checkout.css">
+</head>
+<body>
+
+<div class="checkout-container">
+
+    <h1>Checkout 🧾</h1>
+
+    <div id="order-summary"></div>
+    
+   
+<br><br>
+    </div>
+ 
+    </div>
+    <form id="orderForm">
+
+        <input type="text" name="name" placeholder="Full Name" required>
+
+        <input type="tel" name="mobile" placeholder="Mobile Number" required>
+
+        <textarea name="address" placeholder="Full Address" required></textarea>
+        <div class="coupon-box">
+    <h3>Apply Coupon</h3>
+    <input type="text" id="couponCode" placeholder="Enter coupon code">
+    <button type="button" onclick="applyCoupon()">Apply</button>
+    <p id="couponMessage"></p>
+</div>
+        <div class="payment-section">
+
+    <h3>Payment Method</h3>
+
+    <label class="payment-option">
+        <input type="radio" name="payment" value="COD" checked>
+        Cash on Delivery (COD)
+    </label>
+
+    <label class="payment-option">
+        <input type="radio" name="payment" value="Online">
+        Online Payment
+    </label>
+    <div id="upiSection" style="display:none; margin-top:20px; padding:15px; border:1px solid #ddd; border-radius:8px;">
+
+    <h3>Pay Online via UPI</h3>
+
+    <p><strong>UPI ID:</strong> 6294737698@ybl</p>
+
+    <img src="images/qr.png" alt="QR Code" width="200" style="margin:10px 0;">
+
+    <p style="color:red; font-size:14px; margin-top:10px;">
+        After payment, send screenshot on WhatsApp.
+        Order will be verified manually.
+    </p>
+   
+</div>
+
+</div>
+
+        <button type="submit">Place Order via WhatsApp</button>
+
+    </form>
+
+</div>
+
+<script src="checkout.js"></script>
+</body>
+</html>
