@@ -250,17 +250,15 @@ Handling Fee: ₹${handlingFee}
     }).catch(err => console.log("Order Sheet Error:", err));
 
     /* ===== SEND TO DELIVERY VERIFY SHEET ===== */
-    fetch("https://script.google.com/macros/s/AKfycbza8Ebkg2Q1RFnU1Kis90COj4EeRDuiUl_Z0_T7Wb4A3bnCbB_yzkmHVIuzJ4O2kNeA/exec", {
-        method: "POST",
-        body: JSON.stringify({
-            orderId: orderId,
-            name: name,
-            mobile: mobile,
-            total: finalTotal,
-            deliveryCode: deliveryCode,
-            status: "Pending"
-        })
-    }).catch(err => console.log("Delivery Sheet Error:", err));
+    fetch("https://script.google.com/macros/s/AKfycbyKYCR6XvsXGRgvGPcNcBKkUEIsCAIATEFxg33Ey8vmmIe0EUWtBycG5jczmZsSbWQ1/exec", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    type: "NEW_ORDER",
+    orderId: orderId,
+    deliveryCode: deliveryCode
+  })
+});
 
     /* ===== OPEN WHATSAPP ===== */
     window.open(whatsappURL, "_blank");
