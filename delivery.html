@@ -59,7 +59,7 @@ button{
 </div>
 
 <script>
-function verifyDelivery(){
+  function verifyDelivery(){
 
   let orderId = document.getElementById("orderId").value.trim();
   let deliveryCode = document.getElementById("deliveryCode").value.trim();
@@ -71,9 +71,13 @@ function verifyDelivery(){
     return;
   }
 
-  fetch("https://script.google.com/macros/s/AKfycbwEqcP0BIOKOJ5pqzZfrUJ4r2dmHttAPw4pHhG7nJVKHzbWI1_ZhE_h4ROm4frBYyBZ7Q/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbyKYCR6XvsXGRgvGPcNcBKkUEIsCAIATEFxg33Ey8vmmIe0EUWtBycG5jczmZsSbWQ1/exec", {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify({
+      type: "VERIFY",
       orderId: orderId,
       deliveryCode: deliveryCode
     })
@@ -81,37 +85,35 @@ function verifyDelivery(){
   .then(res => res.text())
   .then(response => {
 
-      if(response.includes("Verified")){
+      console.log("Server Response:", response);
 
+      if(response === "DELIVERY_SUCCESS"){
         result.innerText = "✅ Delivery Completed Successfully!";
         result.style.color = "green";
 
-      } else if(response.includes("Wrong")){
-
+      } else if(response === "WRONG_CODE"){
         result.innerText = "❌ Wrong Delivery Code!";
         result.style.color = "red";
 
-      } else if(response.includes("Not Found")){
-
+      } else if(response === "ORDER_NOT_FOUND"){
         result.innerText = "❌ Order Not Found!";
         result.style.color = "red";
 
       } else {
-
         result.innerText = response;
         result.style.color = "red";
-
       }
 
   })
   .catch(err => {
-      console.error(err);
+      console.error("Fetch Error:", err);
       result.innerText = "Server Error!";
       result.style.color = "red";
   });
 
-}
+  }
 
+  
 </script>
 
 </body>
